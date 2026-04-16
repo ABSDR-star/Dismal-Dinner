@@ -173,6 +173,7 @@ if compare_btn:
             increasing={"marker": {"color": "#ef4444"}},
             decreasing={"marker": {"color": "#22c55e"}},
             totals={"marker": {"color": "#3b82f6"}},
+            showlegend=False,
         ))
         # Add invisible traces for the legend
         waterfall.add_trace(go.Bar(
