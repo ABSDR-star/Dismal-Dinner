@@ -1,0 +1,75 @@
+state,bracket_min,bracket_max,effective_rate
+Alabama,0,9999999,3.70
+Alaska,0,9999999,0.00
+Arizona,0,9999999,2.50
+Arkansas,0,9999999,3.90
+California,0,50000,2.20
+California,50001,150000,6.00
+California,150001,500000,9.30
+California,500001,9999999,12.30
+Colorado,0,9999999,4.40
+Connecticut,0,50000,3.00
+Connecticut,50001,200000,5.50
+Connecticut,200001,9999999,6.99
+Delaware,0,9999999,4.80
+Florida,0,9999999,0.00
+Georgia,0,9999999,4.90
+Hawaii,0,50000,4.40
+Hawaii,50001,150000,6.40
+Hawaii,150001,9999999,8.25
+Idaho,0,9999999,5.80
+Illinois,0,9999999,4.95
+Indiana,0,9999999,3.05
+Iowa,0,9999999,5.70
+Kansas,0,9999999,4.70
+Kentucky,0,9999999,4.00
+Louisiana,0,9999999,3.00
+Maine,0,50000,5.80
+Maine,50001,9999999,7.15
+Maryland,0,9999999,4.75
+Massachusetts,0,9999999,5.00
+Michigan,0,9999999,4.25
+Minnesota,0,50000,5.35
+Minnesota,50001,175000,6.80
+Minnesota,175001,9999999,9.85
+Mississippi,0,10000,0.00
+Mississippi,10001,9999999,4.70
+Missouri,0,9999999,4.80
+Montana,0,9999999,5.90
+Nebraska,0,9999999,5.20
+Nevada,0,9999999,0.00
+New Hampshire,0,9999999,0.00
+New Jersey,0,75000,1.40
+New Jersey,75001,500000,5.53
+New Jersey,500001,9999999,8.97
+New Mexico,0,50000,1.70
+New Mexico,50001,200000,4.90
+New Mexico,200001,9999999,5.90
+New York,0,50000,4.00
+New York,50001,200000,6.09
+New York,200001,9999999,8.82
+North Carolina,0,9999999,4.50
+North Dakota,0,9999999,1.95
+Ohio,0,9999999,3.50
+Oklahoma,0,9999999,4.25
+Oregon,0,50000,6.75
+Oregon,50001,125000,8.00
+Oregon,125001,9999999,9.90
+Pennsylvania,0,9999999,3.07
+Rhode Island,0,75000,3.75
+Rhode Island,75001,9999999,5.99
+South Carolina,0,9999999,5.00
+South Dakota,0,9999999,0.00
+Tennessee,0,9999999,0.00
+Texas,0,9999999,0.00
+Utah,0,9999999,4.65
+Vermont,0,50000,3.35
+Vermont,50001,9999999,6.60
+Virginia,0,9999999,4.75
+Washington,0,9999999,0.00
+West Virginia,0,9999999,5.12
+Wisconsin,0,9999999,5.30
+Wyoming,0,9999999,0.00
+District of Columbia,0,50000,4.00
+District of Columbia,50001,350000,6.50
+District of Columbia,350001,9999999,8.95

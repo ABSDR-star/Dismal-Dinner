@@ -43,8 +43,9 @@ env/
 # Data files
 data/cache.db
 data/*.xlsx
-data/*.csv
 data/*.db
+# Exclude downloaded CSVs but keep our curated tax_data.csv
+!data/tax_data.csv
 
 # Testing
 .pytest_cache/
