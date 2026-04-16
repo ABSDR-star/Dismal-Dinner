@@ -23,4 +23,3 @@ The Gaslight Special: Compare any 1990s midwest salary to a modern HCOL coastal 
 
 The Relocation Reality Check: Is that 20% raise in a new city actually a 15% pay cut?
 
-The Regex Gumbo: Raw data pulled directly from the source, served hot and unformatted (until the frontend fixes it).
