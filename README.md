@@ -7,7 +7,7 @@ I plan to solve my favorite personal holiday question.
 
 Dismal Dinner was built to answer that exact question. Standard inflation calculators are a lie of omission—they tell you how the dollar changed, but they don't tell you how the location or the tax man changed.
 
-This tool scrapes the depths of government HTML tables to find the Utility Truth. 
+This tool collects from the depths of government HTML tables to find the Utility Truth. 
 
 We combine:
 
