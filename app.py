@@ -15,6 +15,19 @@ st.set_page_config(
     layout="wide",
 )
 
+# Google Analytics
+st.html(
+    """
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QL791FB864"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QL791FB864');
+    </script>
+    """
+)
+
 # Header
 st.title("🍽️ Dismal Dinner")
 st.subheader("The Generational Truth Machine")
