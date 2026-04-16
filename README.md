@@ -1,5 +1,7 @@
 # 🍽️ Dismal Dinner
 
+**[Live Demo](https://dismal-dinner.streamlit.app/)**
+
 A "Generational Truth Machine" that uses BLS and BEA data to calculate Real Purchasing Power. Stop comparing salaries and start comparing lifestyles across time (CPI), space (RPP), and policy (Tax Gap).
 
 > "My parents got by on $17k in Ohio in 1997. Why am I struggling on $80k in California today?"
@@ -34,8 +36,8 @@ The final output is a **purchasing power percentage** plus a dollar-level breakd
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/dismal-dinner.git
-cd dismal-dinner
+git clone https://github.com/ABSDR-star/Dismal-Dinner.git
+cd Dismal-Dinner
 
 # Create virtual environment and install dependencies
 python -m venv .venv
@@ -101,6 +103,15 @@ Current coverage: **84%** across 114 tests.
 └── tests/                  # 114 tests (pytest)
 ```
 
+## Built With
+
+- **Python 3.12** — Core language
+- **Streamlit** — Web framework and hosting
+- **Plotly** — Interactive waterfall and bar chart visualizations
+- **Pandas** — Data manipulation
+- **SQLite** — Local caching and comparison history
+- **pytest** — 114 tests, 84% coverage
+
 ## Limitations
 
 - **State-level only** — no city/MSA granularity yet
@@ -110,12 +121,12 @@ Current coverage: **84%** across 114 tests.
 - **Annual data** — no monthly precision
 - **CPI is national** — not region-specific inflation
 
-## Specials ("Shitty Chef" Specials)
+## Try These Scenarios
 
 - **The Gaslight Special**: Compare any 1990s midwest salary to a modern HCOL coastal salary
 - **The Relocation Reality Check**: Is that 20% raise in a new city actually a 15% pay cut?
 
 ## License
 
-Open source. See LICENSE file for details.
+MIT License. See [LICENSE](LICENSE) file for details.
 
