@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 import streamlit as st
+import streamlit.components.v1 as components
 import plotly.graph_objects as go
 import pandas as pd
 from calculator import compare_lifestyles
@@ -15,17 +16,28 @@ st.set_page_config(
     layout="wide",
 )
 
-# Google Analytics
-st.html(
+# Google Analytics — inject into parent document to escape iframe
+components.html(
     """
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QL791FB864"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-QL791FB864');
+      if (!window.parent.document.querySelector('script[src*="googletagmanager.com/gtag/js?id=G-QL791FB864"]')) {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QL791FB864';
+        window.parent.document.head.appendChild(s);
+
+        var i = document.createElement('script');
+        i.textContent = `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-QL791FB864');
+        `;
+        window.parent.document.head.appendChild(i);
+      }
     </script>
-    """
+    """,
+    height=0,
 )
 
 # Header
