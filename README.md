@@ -110,7 +110,7 @@ Current coverage: **84%** across 114 tests.
 - **Annual data** — no monthly precision
 - **CPI is national** — not region-specific inflation
 
-## Specials ("Shitty Chef" Specials)
+## Specials 
 
 - **The Gaslight Special**: Compare any 1990s midwest salary to a modern HCOL coastal salary
 - **The Relocation Reality Check**: Is that 20% raise in a new city actually a 15% pay cut?
