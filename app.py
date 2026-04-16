@@ -193,8 +193,10 @@ if compare_btn:
             showlegend=True,
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
             height=450,
+            xaxis=dict(fixedrange=True),
+            yaxis=dict(fixedrange=True),
         )
-        st.plotly_chart(waterfall, use_container_width=True)
+        st.plotly_chart(waterfall, use_container_width=True, config={"displayModeBar": False})
 
         # 2. Side-by-side bar: after-tax purchasing power
         st.subheader("After-Tax Purchasing Power Comparison")
@@ -221,6 +223,8 @@ if compare_btn:
             yaxis_title="Dollars",
             height=380,
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
+            xaxis=dict(fixedrange=True),
+            yaxis=dict(fixedrange=True),
         )
         gap = result["after_tax2"] - result["after_tax1_equivalent"]
         bars.add_annotation(
@@ -228,7 +232,7 @@ if compare_btn:
             text=f"Gap: {format_currency(abs(gap))} {'ahead' if gap >= 0 else 'behind'}",
             showarrow=False, yshift=25, font=dict(size=14),
         )
-        st.plotly_chart(bars, use_container_width=True)
+        st.plotly_chart(bars, use_container_width=True, config={"displayModeBar": False})
 
         # --- Detailed data ---
         with st.expander("📊 Raw Comparison Data"):
