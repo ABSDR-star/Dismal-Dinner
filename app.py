@@ -312,7 +312,7 @@ if compare_btn:
 # --- Welcome state (no comparison yet) ---
 else:
     st.markdown("""
-    **We've all heard the question:**
+    **We've all asked ourselves the question:**
 
     > *"My parents got by on $17k in Ohio in 1997. Why am I struggling on $80k in California today?"*
 
