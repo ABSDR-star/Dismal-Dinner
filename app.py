@@ -47,6 +47,7 @@ st.markdown(
     "Compare real purchasing power across **time** (CPI), "
     "**location** (RPP), and **tax policy** (state income tax)."
 )
+st.caption("📱 On mobile? Tap the **>** arrow in the top-left corner to open the sidebar and set your scenarios.")
 
 # --- Sidebar: Inputs ---
 ALL_STATES = get_all_states()
