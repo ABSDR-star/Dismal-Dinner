@@ -325,6 +325,13 @@ else:
     4. **Click Compare** to see the real purchasing power breakdown
 
     The defaults are pre-loaded with this example. Hit **Compare** to find out!
+
+    ### Other things you can answer
+    - **"How much is my parents' income really worth today?"** — Keep the same state and just change the years
+    - **"Should I take this job in a new city?"** — Pit a job offer in one state against your current gig in another
+    - **"Is moving to a no-income-tax state worth it?"** — Compare the same salary in Texas vs. California (or any pair)
+    - **"Have wages in my state kept up with the cost of living?"** — Set both scenarios to the same state, different years and incomes
+    - **"How far did a dollar go when my parents were young?"** — Pick any two eras and see the real difference
     """)
 
 # Footer
