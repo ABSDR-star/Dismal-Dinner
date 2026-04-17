@@ -314,7 +314,7 @@ else:
     st.markdown("""
     **We've all asked ourselves the question:**
 
-    > *"My parents got by on <span style="color:#4ec956">&#36;17k in Ohio in 1997</span>. Why am I struggling on <span style="color:#4ec956">&#36;80k in California today</span>?"*
+    > *"My parents got by on 17K in Ohio in 1997. Why am I struggling on 80K in California today?"*
 
     **This tool gives you a real answer** — adjusting for inflation, cost of living, and taxes so you can compare apples to apples.
 
