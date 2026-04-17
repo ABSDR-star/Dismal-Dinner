@@ -48,6 +48,10 @@ st.markdown(
     "**location** (RPP), and **tax policy** (state income tax)."
 )
 st.caption("📱 On mobile? Tap the **>** arrow in the top-left corner to open the sidebar and set your scenarios.")
+st.markdown(
+    "<style>@media (min-width: 769px) { .stCaption:first-of-type { display: none; } }</style>",
+    unsafe_allow_html=True,
+)
 
 # --- Sidebar: Inputs ---
 ALL_STATES = get_all_states()
