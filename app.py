@@ -40,57 +40,6 @@ components.html(
     height=0,
 )
 
-# Make sidebar toggle prominent on mobile + add CTA banner
-st.markdown(
-    """
-    <style>
-    /* Mobile-only banner pointing users to sidebar */
-    @media (max-width: 768px) {
-        .mobile-sidebar-cta {
-            display: flex !important;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, #ff4b4b, #ff6b6b);
-            color: white;
-            padding: 0.75rem 1rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            animation: nudge 2s ease-in-out 3;
-            box-shadow: 0 2px 8px rgba(255,75,75,0.3);
-        }
-        .mobile-sidebar-cta .arrow {
-            font-size: 1.4rem;
-            animation: point 1.5s ease-in-out infinite;
-        }
-        @keyframes point {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(-6px); }
-        }
-        @keyframes nudge {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-    }
-    @media (min-width: 769px) {
-        .mobile-sidebar-cta { display: none !important; }
-    }
-    </style>
-    <div class="mobile-sidebar-cta" onclick="
-        var btn = window.parent.document.querySelector('[data-testid=stSidebarCollapsedControl] button')
-            || window.parent.document.querySelector('[data-testid=collapsedControl]')
-            || window.parent.document.querySelector('button[kind=header]');
-        if (btn) btn.click();
-    ">
-        <span class="arrow">👈</span>
-        <span>Tap here or swipe right to set your scenarios</span>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
 # Header
 st.title("🍽️ Dismal Dinner")
 st.subheader("The Generational Truth Machine")
