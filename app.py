@@ -312,13 +312,13 @@ if compare_btn:
 # --- Welcome state (no comparison yet) ---
 else:
     st.markdown("""
+    > *"My parents got by on $17k in Ohio in 1997. Why am I struggling on $80k in California today?"*
+
     ### How it works
-    1. **Open the sidebar** — tap the **☰ arrow button in the top-left corner** (on mobile) or use the sidebar on the left (on desktop)
+    1. **Open the sidebar** — tap the **>** arrow in the top-left corner (on mobile) or use the sidebar on the left (on desktop)
     2. **Set Scenario 1** — your parents' income, state, and year
     3. **Set Scenario 2** — your current income, state, and year
     4. **Click Compare** to see the real purchasing power breakdown
-
-    > *"My parents got by on $17k in Ohio in 1997. Why am I struggling on $80k in California today?"*
 
     The defaults are pre-loaded with this example. Hit **Compare** to find out!
     """)
