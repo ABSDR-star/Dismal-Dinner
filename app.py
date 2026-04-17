@@ -35,7 +35,7 @@ with st.sidebar:
     st.header("Scenario 1 — Then")
     income1 = st.number_input(
         "Income ($)", min_value=0, max_value=10_000_000,
-        value=17_000, step=1_000, key="income1",
+        value=27_000, step=1_000, key="income1",
     )
     state1 = st.selectbox("State", ALL_STATES, index=ALL_STATES.index("Ohio"), key="state1")
     year1 = st.slider("Year", 1990, 2025, 1997, key="year1")
@@ -45,7 +45,7 @@ with st.sidebar:
     st.header("Scenario 2 — Now")
     income2 = st.number_input(
         "Income ($)", min_value=0, max_value=10_000_000,
-        value=80_000, step=1_000, key="income2",
+        value=60_000, step=1_000, key="income2",
     )
     state2 = st.selectbox("State", ALL_STATES, index=ALL_STATES.index("California"), key="state2")
     year2 = st.slider("Year", 1990, 2025, 2024, key="year2")
@@ -314,7 +314,7 @@ else:
     st.markdown("""
     **We've all asked ourselves the question:**
 
-    > *"My parents got by on 17K in Ohio in 1997. Why am I struggling on 80K in California today?"*
+    > *"My parents got by on 27K in Ohio in 1997. Why am I struggling on 60K in California today?"*
 
     **This tool gives you a real answer** — adjusting for inflation, cost of living, and taxes so you can compare apples to apples.
 
