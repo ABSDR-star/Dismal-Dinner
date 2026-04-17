@@ -312,7 +312,11 @@ if compare_btn:
 # --- Welcome state (no comparison yet) ---
 else:
     st.markdown("""
+    **We've all heard the question:**
+
     > *"My parents got by on $17k in Ohio in 1997. Why am I struggling on $80k in California today?"*
+
+    **This tool gives you a real answer** — adjusting for inflation, cost of living, and taxes so you can compare apples to apples.
 
     ### How it works
     1. **Open the sidebar** — tap the **>** arrow in the top-left corner (on mobile) or use the sidebar on the left (on desktop)
