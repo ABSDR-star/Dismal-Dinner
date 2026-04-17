@@ -40,6 +40,40 @@ components.html(
     height=0,
 )
 
+# Make sidebar toggle button prominent on mobile
+st.markdown(
+    """
+    <style>
+    @media (max-width: 768px) {
+        button[data-testid="stSidebarCollapsedControl"] {
+            background-color: #ff4b4b !important;
+            color: white !important;
+            border-radius: 50% !important;
+            width: 3rem !important;
+            height: 3rem !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+            z-index: 999 !important;
+            animation: pulse-btn 2s ease-in-out 3;
+        }
+        button[data-testid="stSidebarCollapsedControl"] svg {
+            width: 1.5rem !important;
+            height: 1.5rem !important;
+            fill: white !important;
+            stroke: white !important;
+        }
+        @keyframes pulse-btn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 # Header
 st.title("🍽️ Dismal Dinner")
 st.subheader("The Generational Truth Machine")
