@@ -210,3 +210,136 @@ class TestPopulateCpiCache:
         populate_cpi_cache(start_year=2020, end_year=2023)
         # Should have loaded fallback data
         assert _get_cached(2020) is not None
+
+    @patch("data.cpi_fetcher._fetch_from_bls")
+    def test_multi_year_chunking(self, mock_fetch):
+        """Test that large year ranges are chunked properly."""
+        mock_fetch.return_value = SAMPLE_BLS_RESPONSE
+        populate_cpi_cache(start_year=1990, end_year=2023)
+        # Should have been called multiple times for 33 year range
+        assert mock_fetch.call_count >= 2
+
+    @patch("data.cpi_fetcher._fetch_from_bls")
+    def test_with_api_key(self, mock_fetch):
+        """Test that API key is passed correctly."""
+        mock_fetch.return_value = SAMPLE_BLS_RESPONSE
+        populate_cpi_cache(start_year=2020, end_year=2023, api_key="test_key")
+        # Verify API key was used - it's passed as the 3rd positional argument
+        assert mock_fetch.called
+        # Check the call arguments
+        call_args = mock_fetch.call_args_list[0]
+        # Args are (start_year, end_year, api_key)
+        assert len(call_args[0]) == 3
+        assert call_args[0][2] == "test_key"
+
+
+class TestDatabaseOperations:
+    """Tests for database connection and operations."""
+
+    def test_db_creation_is_idempotent(self):
+        """Test that creating DB multiple times is safe."""
+        conn1 = _get_db()
+        conn1.close()
+        conn2 = _get_db()
+        conn2.close()
+        # Should not raise any errors
+
+    def test_cache_values_empty_dict(self):
+        """Test caching an empty dictionary."""
+        _cache_values({})
+        # Should not raise errors
+        assert _get_all_cached() == {}
+
+    def test_get_all_cached_after_multiple_inserts(self):
+        """Test retrieving all values after multiple cache operations."""
+        _cache_values({2020: 258.8})
+        _cache_values({2021: 271.0})
+        _cache_values({2022: 292.7})
+        all_cached = _get_all_cached()
+        assert len(all_cached) == 3
+        assert 2020 in all_cached
+        assert 2021 in all_cached
+        assert 2022 in all_cached
+
+
+class TestInflationFactorEdgeCases:
+    """Tests for edge cases in inflation factor calculation."""
+
+    def test_extreme_inflation(self):
+        """Test with very high inflation scenario."""
+        _cache_values({1990: 100.0, 2023: 500.0})
+        factor = get_inflation_factor(1990, 2023)
+        assert factor == pytest.approx(5.0)
+
+    def test_deflation_scenario(self):
+        """Test when prices go down (rare but possible)."""
+        _cache_values({2020: 260.0, 2021: 255.0})
+        factor = get_inflation_factor(2020, 2021)
+        assert factor < 1.0
+        assert factor == pytest.approx(255.0 / 260.0)
+
+    def test_adjacent_years(self):
+        """Test inflation between consecutive years."""
+        _cache_values({2022: 292.7, 2023: 304.7})
+        factor = get_inflation_factor(2022, 2023)
+        assert factor > 1.0
+        assert factor == pytest.approx(304.7 / 292.7)
+
+
+class TestGetCpiEdgeCases:
+    """Tests for edge cases in get_cpi function."""
+
+    def test_get_cpi_uses_cached_before_fallback(self):
+        """Test that cached value takes precedence over fallback."""
+        # Cache a different value than fallback
+        _cache_values({2020: 999.99})
+        result = get_cpi(2020)
+        assert result == pytest.approx(999.99)
+        assert result != _FALLBACK_CPI[2020]
+
+    @patch("data.cpi_fetcher.populate_cpi_cache")
+    def test_get_cpi_handles_populate_failure(self, mock_populate):
+        """Test that get_cpi handles populate failures gracefully."""
+        mock_populate.side_effect = Exception("Network error")
+        # Should fall back to _FALLBACK_CPI
+        result = get_cpi(2020)
+        assert result == pytest.approx(_FALLBACK_CPI[2020])
+
+    def test_get_cpi_missing_year_no_fallback(self):
+        """Test error when year is not in cache or fallback."""
+        with pytest.raises(ValueError, match="No CPI data"):
+            get_cpi(1800)
+
+
+class TestFetchFromBlsEdgeCases:
+    """Tests for edge cases in BLS API fetching."""
+
+    @patch("data.cpi_fetcher.requests.post")
+    def test_timeout_handling(self, mock_post):
+        """Test that timeouts are handled properly."""
+        import requests
+        mock_post.side_effect = requests.exceptions.Timeout("Request timed out")
+        with pytest.raises(requests.exceptions.Timeout):
+            _fetch_from_bls(2020, 2023)
+
+    @patch("data.cpi_fetcher.requests.post")
+    def test_malformed_json_response(self, mock_post):
+        """Test handling of malformed JSON response."""
+        mock_resp = MagicMock()
+        mock_resp.raise_for_status = MagicMock()
+        mock_resp.json.side_effect = ValueError("Invalid JSON")
+        mock_post.return_value = mock_resp
+
+        with pytest.raises(ValueError):
+            _fetch_from_bls(2020, 2023)
+
+    @patch("data.cpi_fetcher.requests.post")
+    def test_empty_message_in_error(self, mock_post):
+        """Test error handling when BLS returns error without message."""
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"status": "REQUEST_FAILED"}
+        mock_resp.raise_for_status = MagicMock()
+        mock_post.return_value = mock_resp
+
+        with pytest.raises(RuntimeError, match="BLS API error"):
+            _fetch_from_bls(2020, 2023)
