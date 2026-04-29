@@ -193,3 +193,102 @@ class TestBuildSummary:
         assert "California" in s
         assert "1997" in s
         assert "2024" in s
+
+
+class TestInputValidation:
+    """Tests for input validation and error handling."""
+
+    def test_negative_income1_raises(self):
+        with pytest.raises(ValueError, match="positive"):
+            compare_lifestyles(-50000, "Texas", 2020, 60000, "Ohio", 2020)
+
+    def test_negative_income2_raises(self):
+        with pytest.raises(ValueError, match="positive"):
+            compare_lifestyles(50000, "Texas", 2020, -60000, "Ohio", 2020)
+
+    def test_year1_below_min_raises(self):
+        with pytest.raises(ValueError, match="outside supported range"):
+            compare_lifestyles(50000, "Texas", 1989, 60000, "Ohio", 2020)
+
+    def test_year1_above_max_raises(self):
+        with pytest.raises(ValueError, match="outside supported range"):
+            compare_lifestyles(50000, "Texas", 2026, 60000, "Ohio", 2020)
+
+    def test_year2_below_min_raises(self):
+        with pytest.raises(ValueError, match="outside supported range"):
+            compare_lifestyles(50000, "Texas", 2020, 60000, "Ohio", 1989)
+
+    def test_year2_above_max_raises(self):
+        with pytest.raises(ValueError, match="outside supported range"):
+            compare_lifestyles(50000, "Texas", 2020, 60000, "Ohio", 2026)
+
+    def test_invalid_state1_raises(self):
+        with pytest.raises(ValueError, match="Unknown state"):
+            compare_lifestyles(50000, "Narnia", 2020, 60000, "Ohio", 2020)
+
+    def test_invalid_state2_raises(self):
+        with pytest.raises(ValueError, match="Unknown state"):
+            compare_lifestyles(50000, "Texas", 2020, 60000, "Atlantis", 2020)
+
+
+class TestBreakdownEdgeCases:
+    """Tests for edge cases in breakdown computation."""
+
+    def test_very_large_income(self):
+        bd = _compute_breakdown(
+            income1=10_000_000, income2=10_000_000,
+            cpi_factor=1.5, location_factor=1.2,
+            tax_rate1=10.0, tax_rate2=12.0,
+        )
+        assert bd["nominal_income1"] == 10_000_000
+        assert bd["gap"] < 0  # income2 can't keep up with adjustments
+
+    def test_very_small_income(self):
+        bd = _compute_breakdown(
+            income1=1000, income2=1500,
+            cpi_factor=1.0, location_factor=1.0,
+            tax_rate1=0.0, tax_rate2=0.0,
+        )
+        assert bd["gap"] == pytest.approx(500)
+
+    def test_high_tax_differential(self):
+        bd = _compute_breakdown(
+            income1=100000, income2=100000,
+            cpi_factor=1.0, location_factor=1.0,
+            tax_rate1=0.0, tax_rate2=13.0,  # High tax state
+        )
+        assert bd["tax_impact"] == pytest.approx(-13000)
+
+    def test_combined_negative_factors(self):
+        """Test when multiple factors work against income2."""
+        bd = _compute_breakdown(
+            income1=50000, income2=50000,
+            cpi_factor=2.0,     # Inflation doubles prices
+            location_factor=1.5, # 50% more expensive location
+            tax_rate1=0.0, tax_rate2=10.0,  # 10% tax added
+        )
+        # All factors work against income2
+        assert bd["gap"] < -100000  # Large negative gap
+
+
+class TestSummaryEdgeCases:
+    """Tests for edge cases in summary generation."""
+
+    def test_exactly_95_percent(self):
+        s = _build_summary(50000, "Texas", 2020, 50000, "Ohio", 2020, 95.0)
+        # 95.0 is not < 95, so it will say "about the same"
+        assert "about the same" in s
+
+    def test_exactly_105_percent(self):
+        s = _build_summary(50000, "Texas", 2020, 50000, "Ohio", 2020, 105.0)
+        # 105.0 is not > 105, so it will say "about the same"
+        assert "about the same" in s
+
+    def test_very_low_percentage(self):
+        s = _build_summary(100000, "Texas", 2020, 20000, "California", 2020, 15.0)
+        assert "worse off" in s
+        assert "15.0%" in s
+
+    def test_very_high_percentage(self):
+        s = _build_summary(10000, "Texas", 2020, 100000, "Texas", 2020, 1000.0)
+        assert "better off" in s
